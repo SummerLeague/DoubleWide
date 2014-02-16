@@ -14,8 +14,8 @@ function index(req, res) {
 function search(req, res) {
 	// TODO/DISCUSS: Consider making these body params so the routing isnt so prone to conflicts with actual resources.
 	// TODO: Should probably check lnglat params presence before attempting to operate on it...
-	var lng = req.body.lng,
-			lat = req.body.lat;
+	var lng = req.params.lng,
+			lat = req.params.lat;
 	Venue.findNearCoordinates(lng, lat, function(err, venues) {
 		if (err) {
 			// TODO: Handle this error more appropriately.
@@ -30,7 +30,7 @@ function search(req, res) {
 
 function setup(app) {
 	app.get('/venues', index);
-	app.post('/venues/search', search);
+	app.get('/venues/search', search);
 }
 
 module.exports = setup;
