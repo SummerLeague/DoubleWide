@@ -5,6 +5,7 @@ module.exports = function(app) {
 	});
 	// Load all other routes
 	[
+	  "venues",
 	  "sessions",
 	  "checkins",
 	  "users"
