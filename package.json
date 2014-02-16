@@ -1,0 +1,22 @@
+{
+	"name": "DoubleWide",
+	"description": "",
+	"version": "0.0.1",
+	"author": "SummerLeague",
+	"private": true,
+	"dependencies": {
+		"config": "latest",
+		"express": "3.x",
+		"foursquarevenues": "latest",
+		"mongodb": "1.x",
+		"mongoose": "3.x",
+		"mongoose-unique-validator": "latest",
+		"node.extend": "latest",
+		"passport": "latest",
+		"passport-local": "latest",
+		"passport-local-mongoose": "latest"
+	},
+	"devDependencies": {
+		"mocha": "~1.13.0"
+	}
+}
