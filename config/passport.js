@@ -1,4 +1,4 @@
-var User = require('app/models/user'),
+var User          = require('app/models/user'),
 		LocalStrategy = require('passport-local').Strategy;
 
 module.exports = function (passport, config) {

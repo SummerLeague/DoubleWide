@@ -1,9 +1,9 @@
 module.exports = function(app) {
-	// Home
+	// Set root route.
 	app.get('/', function(req, res) {
 		res.send('Welcome to the DoubleWide.');
 	});
-	// Load all other routes
+	// Load all other routes.
 	[
 	  "venues",
 	  "sessions",
@@ -13,9 +13,9 @@ module.exports = function(app) {
 	    require("app/routes/" + routeName)(app);
 	});
 
-	// OK, routes are loaded, now use the router:
+	// Now that routes are loaded, use the router.
 	app.use(app.router);
 
-	// Finally, use any error handlers
+	// Finally, use any error handlers.
 	app.use(require("app/middleware/").notFound);
 };

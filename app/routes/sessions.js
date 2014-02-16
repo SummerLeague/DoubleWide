@@ -1,5 +1,8 @@
+// Setup ========================================================================
 var passport = require('passport');
 
+
+// Controllers ==================================================================
 function create(req, res) {
 	// Note: Helpful info on passport.authenticate('local'):
 	//   http://stackoverflow.com/questions/9690490/how-can-i-report-an-invalid-login-properly-with-express-and-passport
@@ -27,8 +30,7 @@ function create(req, res) {
 }
 
 
-function setup(app) {
- 	app.post('/login', create);
+// Exports ======================================================================
+module.exports = function(app) {
+ 	app.post('/api/login', create);
 }
-
-module.exports = setup;

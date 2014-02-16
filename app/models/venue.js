@@ -1,7 +1,8 @@
-var mongoose = require('mongoose'),
-		Schema = mongoose.Schema,
-		extend = require('node.extend'),
-		Checkin = require('app/models/checkin'),
+// Setup ========================================================================
+var mongoose   = require('mongoose'),
+		Schema     = mongoose.Schema,
+		extend     = require('node.extend'),
+		Checkin    = require('app/models/checkin'),
 		foursquare = (require('foursquarevenues'))(process.env.FOURSQUARE_KEY, process.env.FOURSQUARE_SECRET);
 
 var VenueSchema = new Schema({
@@ -9,9 +10,7 @@ var VenueSchema = new Schema({
 });
 
 
-/*
-	Class methods.
-*/
+// Class Methods ================================================================
 VenueSchema.statics = extend({
 
 	findOrCreateByFoursquareId: function(foursquare_id, callback) {
@@ -35,9 +34,7 @@ VenueSchema.statics = extend({
 		var params = {
         "ll": [lat, lng].join(",")
     };
-    console.log(process.env.FOURSQUARE_KEY);
-		console.log(process.env.FOURSQUARE_SECRET);
-		console.log('------------------');
+
     foursquare.getVenues(params, function(err, venues) {
         callback(err, venues);
     });
@@ -46,9 +43,7 @@ VenueSchema.statics = extend({
 }, VenueSchema.statics);
 
 
-/*
-	Instance methods.
-*/
+// Instance Methods =============================================================
 VenueSchema.methods = extend({
 
 	checkins: function(options, callback) {
@@ -81,4 +76,5 @@ VenueSchema.methods = extend({
 }, VenueSchema.methods);
 
 
+// Exports ======================================================================
 module.exports = mongoose.model('Venue', VenueSchema);
