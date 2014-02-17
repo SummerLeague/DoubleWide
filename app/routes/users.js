@@ -6,7 +6,6 @@ var User        = require('app/models/user'),
 
 // Controllers ==================================================================
 function create(req, res) {
-	User.fuckYou();
   User.register(new User({ nickname: req.body.nickname }), req.body.password, function(err, user) {
     if (err) {
       return res.send(422, {
