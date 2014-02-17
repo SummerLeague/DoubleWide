@@ -24,7 +24,6 @@ function requireAuth(req, res, next) {
 }
 
 function notFound(req, res) {
-  // TODO: URGENT. MOVE THIS
   res.send(404);
 }
 

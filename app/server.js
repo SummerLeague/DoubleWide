@@ -14,6 +14,7 @@ app.configure(function() {
 	app.use(express.logger());
 	app.use(express.bodyParser());
 	app.use(passport.initialize());
+	app.use(express.static('public'));
 	app.use(app.router);
 });
 

@@ -1,9 +1,5 @@
 module.exports = function(app) {
-	// Set root route.
-	app.get('/', function(req, res) {
-		res.send('Welcome to the DoubleWide.');
-	});
-	// Load all other routes.
+	// API ==========================================================================
 	[
 	  "venues",
 	  "sessions",
@@ -12,10 +8,18 @@ module.exports = function(app) {
 	].forEach(function (routeName) {
 	    require("app/routes/" + routeName)(app);
 	});
-
-	// Now that routes are loaded, use the router.
 	app.use(app.router);
 
-	// Finally, use any error handlers.
-	app.use(require("app/middleware/").notFound);
+
+	// Error Handling ===============================================================
+	app.use(function(err, req, res, next){
+	  console.error(err.stack);
+	  res.send(500, 'Something broke!');
+	});
+
+
+	// Application ==================================================================
+	app.get('*', function(req, res) {
+		res.sendfile('./public/index.html'); // Load the single view file (angular will handle the page changes on the front-end)
+	});
 };
