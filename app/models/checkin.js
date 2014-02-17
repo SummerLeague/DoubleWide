@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 		extend   = require('node.extend');
 
 
-// Schema ========================================================================
+// Schema =======================================================================
 var CheckinSchema = new Schema({
 	creator: { type: Schema.ObjectId, ref: 'User', required: true },
 	venue: { type: Schema.ObjectId, ref: 'Venue', required: true },

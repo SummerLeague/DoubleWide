@@ -1,11 +1,10 @@
 // Setup ========================================================================
-var mongoose        = require('mongoose'),
-		Schema          = mongoose.Schema,
-		crypto          = require('crypto'),
-		extend          = require('node.extend'),
-		passportLocal   = require('passport-local-mongoose'),
-		uniqueValidator = require('mongoose-unique-validator'),
-		Checkin         = require('app/models/checkin');
+var mongoose       = require('mongoose'),
+		Schema         = mongoose.Schema,
+		crypto         = require('crypto'),
+		extend         = require('node.extend'),
+		passportLocal  = require('passport-local-mongoose'),
+		Checkin        = require('app/models/checkin');
 
 
 // Schema =======================================================================
@@ -18,19 +17,18 @@ var UserSchema = new Schema({
 });
 
 
+// Plugins ======================================================================
+UserSchema.plugin(passportLocal, {
+	usernameField: 'nickname',
+	missingUsernameError: 'A nickname is required.',
+	userExistsError: 'A user already exists with the nickname: \'%s\'.'
+});
+
+
 // Validations ==================================================================
 UserSchema.path('nickname').index({ unique: true });
 // TODO: more validations on nickname and password.
 // TODO: password confirmation on creation and password update.
-
-
-// Plugins ======================================================================
-UserSchema.plugin(uniqueValidator, {});
-
-UserSchema.plugin(passportLocal, {
-	usernameField: 'nickname',
-	missingUsernameError: 'A nickname is required.'
-});
 
 
 // Hooks ========================================================================

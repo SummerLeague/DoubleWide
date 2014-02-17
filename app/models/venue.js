@@ -5,6 +5,8 @@ var mongoose   = require('mongoose'),
 		Checkin    = require('app/models/checkin'),
 		foursquare = (require('foursquarevenues'))(process.env.FOURSQUARE_KEY, process.env.FOURSQUARE_SECRET);
 
+
+// Schema =======================================================================
 var VenueSchema = new Schema({
 	foursquare_id: { type: String, required: true },
 });
