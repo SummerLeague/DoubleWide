@@ -2,7 +2,6 @@
 var mongoose   = require('mongoose'),
 		Schema     = mongoose.Schema,
 		extend     = require('node.extend'),
-		Checkin    = require('app/models/checkin'),
 		foursquare = (require('foursquarevenues'))(process.env.FOURSQUARE_KEY, process.env.FOURSQUARE_SECRET);
 
 
@@ -16,6 +15,7 @@ var VenueSchema = new Schema({
 VenueSchema.statics = extend({
 
 	findOrCreateByFoursquareId: function(foursquare_id, callback) {
+		var self = this;
 		this.findOne({ foursquare_id: foursquare_id }, function(err, venue) {
 			if (!venue) {
 				var new_venue = new self({
@@ -54,12 +54,12 @@ VenueSchema.methods = extend({
 		options.perPage = options.perPage || 10;
 		options.criteria = { checkin: this._id };
 
-		Checkin.list(options, function(err, checkins) {
+		mongoose.model('Checkin').list(options, function(err, checkins) {
 		  if (err) {
 		  	callback(err, null);
 		  }
 		  else {
-			  Checkins.count(options.criteria, function (err, count) {
+			  mongoose.model('Checkin').count(options.criteria, function (err, count) {
 			  	if (err) {
 			  		callback(err, null);
 			  	}

@@ -1,7 +1,6 @@
 // Setup ========================================================================
 var mongoose = require('mongoose'),
 		Schema   = mongoose.Schema,
-    Venue    = require('app/models/venue');
 		extend   = require('node.extend');
 
 
@@ -45,7 +44,7 @@ CheckinSchema.methods = extend({
 
   setVenueAndSave: function (foursquare_id, callback) {
     var self = this;
-    Venue.findOrCreateByFoursquareId(foursquare_id, function(err, venue) {
+    mongoose.model('Venue').findOrCreateByFoursquareId(foursquare_id, function(err, venue) {
       if (err) {
         return callback(err, null);
       }

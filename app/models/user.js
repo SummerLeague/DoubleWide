@@ -3,8 +3,7 @@ var mongoose       = require('mongoose'),
 		Schema         = mongoose.Schema,
 		crypto         = require('crypto'),
 		extend         = require('node.extend'),
-		passportLocal  = require('passport-local-mongoose'),
-		Checkin        = require('app/models/checkin');
+		passportLocal  = require('passport-local-mongoose');
 
 
 // Schema =======================================================================
@@ -93,12 +92,12 @@ UserSchema.methods = extend({
 		options.perPage = options.perPage || 10;
 		options.criteria = { creator: this._id };
 
-		Checkin.list(options, function(err, checkins) {
+		mongoose.model('Checkin').list(options, function(err, checkins) {
 		  if (err) {
 		  	callback(err, null);
 		  }
 		  else {
-			  Checkin.count({}, function (err, count) {
+			  mongoose.model('Checkin').count({}, function (err, count) {
 			  	if (err) {
 			  		callback(err, null);
 			  	}
