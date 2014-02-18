@@ -1,5 +1,8 @@
+// Setup ========================================================================
 var Venue = require('app/models/venue');
 
+
+// Controllers ==================================================================
 function index(req, res) {
 	return Venue.find(function(err, venues) {
 		if(err) {
@@ -29,9 +32,8 @@ function search(req, res) {
 };
 
 
-function setup(app) {
-	app.get('/venues', index);
-	app.get('/venues/search', search);
+// Exports ======================================================================
+module.exports = function(app) {
+	app.get('/api/venues', index);
+	app.get('/api/venues/search', search);
 }
-
-module.exports = setup;

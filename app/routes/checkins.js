@@ -1,9 +1,11 @@
-var Checkin = require('app/models/checkin'),
-		User = require('app/models/user'),
-		Venue = require('app/models/venue'),
-    requireAuth = require("app/middleware/").requireAuth; // TODO: Investigate how others include middleware like this.;
+// Setup ========================================================================
+var Checkin     = require('app/models/checkin'),
+		User        = require('app/models/user'),
+		Venue       = require('app/models/venue'),
+    requireAuth = require("app/middleware/").requireAuth;
 
 
+// Controllers ==================================================================
 function index(req, res) {
   // TODO/DISCUSS: Not incredibly happy with this API design. Feel like the route should be more explicit...
   //   i.e.; scoped to a user or a venue rather than taking ids for either as URL params...
@@ -71,10 +73,9 @@ function create(req, res) {
 };
 
 
-function setup(app) {
-  app.get('/checkins', index);
-  app.get('/checkins/:checkin_id', show);
-  app.post('/checkins', requireAuth, create);
+// Exports ======================================================================
+module.exports = function(app) {
+  app.get('/api/checkins', index);
+  app.get('/api/checkins/:checkin_id', show);
+  app.post('/api/checkins', requireAuth, create);
 }
-
-module.exports = setup;

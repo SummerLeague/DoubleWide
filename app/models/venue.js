@@ -1,20 +1,21 @@
-var mongoose = require('mongoose'),
-		Schema = mongoose.Schema,
-		extend = require('node.extend'),
-		Checkin = require('app/models/checkin'),
+// Setup ========================================================================
+var mongoose   = require('mongoose'),
+		Schema     = mongoose.Schema,
+		extend     = require('node.extend'),
 		foursquare = (require('foursquarevenues'))(process.env.FOURSQUARE_KEY, process.env.FOURSQUARE_SECRET);
 
+
+// Schema =======================================================================
 var VenueSchema = new Schema({
 	foursquare_id: { type: String, required: true },
 });
 
 
-/*
-	Class methods.
-*/
+// Class Methods ================================================================
 VenueSchema.statics = extend({
 
 	findOrCreateByFoursquareId: function(foursquare_id, callback) {
+		var self = this;
 		this.findOne({ foursquare_id: foursquare_id }, function(err, venue) {
 			if (!venue) {
 				var new_venue = new self({
@@ -35,9 +36,7 @@ VenueSchema.statics = extend({
 		var params = {
         "ll": [lat, lng].join(",")
     };
-    console.log(process.env.FOURSQUARE_KEY);
-		console.log(process.env.FOURSQUARE_SECRET);
-		console.log('------------------');
+
     foursquare.getVenues(params, function(err, venues) {
         callback(err, venues);
     });
@@ -46,9 +45,7 @@ VenueSchema.statics = extend({
 }, VenueSchema.statics);
 
 
-/*
-	Instance methods.
-*/
+// Instance Methods =============================================================
 VenueSchema.methods = extend({
 
 	checkins: function(options, callback) {
@@ -57,12 +54,12 @@ VenueSchema.methods = extend({
 		options.perPage = options.perPage || 10;
 		options.criteria = { checkin: this._id };
 
-		Checkin.list(options, function(err, checkins) {
+		mongoose.model('Checkin').list(options, function(err, checkins) {
 		  if (err) {
 		  	callback(err, null);
 		  }
 		  else {
-			  Checkins.count(options.criteria, function (err, count) {
+			  mongoose.model('Checkin').count(options.criteria, function (err, count) {
 			  	if (err) {
 			  		callback(err, null);
 			  	}
@@ -81,4 +78,5 @@ VenueSchema.methods = extend({
 }, VenueSchema.methods);
 
 
+// Exports ======================================================================
 module.exports = mongoose.model('Venue', VenueSchema);

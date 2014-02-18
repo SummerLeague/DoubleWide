@@ -1,11 +1,13 @@
-var mongoose = require('mongoose'),
-		Schema = mongoose.Schema,
-		crypto = require('crypto'),
-		extend = require('node.extend'),
-		passportLocalMongoose = require('passport-local-mongoose'),
-		uniqueValidator = require('mongoose-unique-validator'),
-		Checkin = require('app/models/checkin');
+// Setup ========================================================================
+var mongoose       = require('mongoose'),
+		Schema         = mongoose.Schema,
+		crypto         = require('crypto'),
+		extend         = require('node.extend'),
+		passportLocal  = require('passport-local-mongoose');
 
+
+// Schema =======================================================================
+// NOTE: Additional fields provided by passportLocal plugin below.
 var UserSchema = new Schema({
 	auth_token: {
 		token: { type: String, required: true },
@@ -13,29 +15,22 @@ var UserSchema = new Schema({
 	}
 });
 
-// Use passport-local-mongoose to handle authentication.
-//   This will also add several fields to our model including 'nickname'.
-UserSchema.plugin(passportLocalMongoose, {
+
+// Plugins ======================================================================
+UserSchema.plugin(passportLocal, {
 	usernameField: 'nickname',
-	missingUsernameError: 'A nickname is required.'
+	missingUsernameError: 'A nickname is required.',
+	userExistsError: 'A user already exists with the nickname: \'%s\'.'
 });
 
 
-/*
-	Validations.
-*/
-// Add uniquness constraint to 'nickname'.
+// Validations ==================================================================
 UserSchema.path('nickname').index({ unique: true });
 // TODO: more validations on nickname and password.
 // TODO: password confirmation on creation and password update.
 
-// NOTE: Order matters here. This plugin must go beneath the declaration of uniqueness constraints.
-UserSchema.plugin(uniqueValidator, {});
 
-
-/*
-	Hooks.
-*/
+// Hooks ========================================================================
 UserSchema.pre('validate', function (next) {
 
 	if (this.isNew) {
@@ -47,9 +42,7 @@ UserSchema.pre('validate', function (next) {
 });
 
 
-/*
-	Class methods.
-*/
+// Class Methods ================================================================
 UserSchema.statics = extend({
 
 	findByToken: function(token, callback) {
@@ -67,9 +60,7 @@ UserSchema.statics = extend({
 }, UserSchema.statics); // TODO/URGENT: Discuss the costs/benefits of using this 'extend' method here with Mark.
 
 
-/*
-	Instance methods.
-*/
+// Instance Methods =============================================================
 UserSchema.methods = extend({
 
 	tokenExpired: function() {
@@ -101,12 +92,12 @@ UserSchema.methods = extend({
 		options.perPage = options.perPage || 10;
 		options.criteria = { creator: this._id };
 
-		Checkin.list(options, function(err, checkins) {
+		mongoose.model('Checkin').list(options, function(err, checkins) {
 		  if (err) {
 		  	callback(err, null);
 		  }
 		  else {
-			  Checkin.count({}, function (err, count) {
+			  mongoose.model('Checkin').count({}, function (err, count) {
 			  	if (err) {
 			  		callback(err, null);
 			  	}
@@ -125,4 +116,5 @@ UserSchema.methods = extend({
 }, UserSchema.methods);
 
 
+// Exports ======================================================================
 module.exports = mongoose.model('User', UserSchema);

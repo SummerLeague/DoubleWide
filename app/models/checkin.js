@@ -1,8 +1,10 @@
+// Setup ========================================================================
 var mongoose = require('mongoose'),
-		Schema = mongoose.Schema,
-    Venue = require('app/models/venue');
-		extend = require('node.extend');
+		Schema   = mongoose.Schema,
+		extend   = require('node.extend');
 
+
+// Schema =======================================================================
 var CheckinSchema = new Schema({
 	creator: { type: Schema.ObjectId, ref: 'User', required: true },
 	venue: { type: Schema.ObjectId, ref: 'Venue', required: true },
@@ -10,9 +12,8 @@ var CheckinSchema = new Schema({
 	createdAt: { type: Date, default: Date.now }
 });
 
-/*
-	Class methods.
-*/
+
+// Class Methods ================================================================
 CheckinSchema.statics = extend({
 
   load: function (id, callback) {
@@ -38,14 +39,12 @@ CheckinSchema.statics = extend({
 }, CheckinSchema.statics);
 
 
-/*
-  Instance methods.
-*/
+// Instance Methods =============================================================
 CheckinSchema.methods = extend({
 
   setVenueAndSave: function (foursquare_id, callback) {
     var self = this;
-    Venue.findOrCreateByFoursquareId(foursquare_id, function(err, venue) {
+    mongoose.model('Venue').findOrCreateByFoursquareId(foursquare_id, function(err, venue) {
       if (err) {
         return callback(err, null);
       }
@@ -66,4 +65,6 @@ CheckinSchema.methods = extend({
 
 }, CheckinSchema.methods);
 
+
+// Exports ======================================================================
 module.exports = mongoose.model('Checkin', CheckinSchema);

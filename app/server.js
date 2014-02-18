@@ -1,16 +1,20 @@
 #!/usr/bin/env node
-var express = require('express'),
-		mongoose = require('mongoose'),
-		config = require('config'),
-		passport = require('passport'),
-		app = express(),
-		server = require('http').createServer(app);
 
-// Configure application.
+// Setup ========================================================================
+var express  = require('express'),
+		mongoose = require('mongoose'),
+		config   = require('config'),
+		passport = require('passport'),
+		app      = express(),
+		server   = require('http').createServer(app);
+
+
+// Configure Aapplication  ======================================================
 app.configure(function() {
 	app.use(express.logger());
 	app.use(express.bodyParser());
 	app.use(passport.initialize());
+	app.use(express.static('public'));
 	app.use(app.router);
 });
 
@@ -25,14 +29,16 @@ app.configure('production', function() {
 	app.use(express.errorHandler());
 });
 
-// Setup routes.
+
+// Routes =======================================================================
 require('../config/routes')(app);
 
-// Configure Passport.
+
+// Passport =====================================================================
 require('../config/passport')(passport, config);
 
-// Makes connection asynchronously.  Mongoose will queue up database
-// operations and release them when the connection is complete.
+
+// Connect to Database ==========================================================
 mongoose.connect(config.database.uri, function (err, res) {
 	if (err) {
 		console.log ('ERROR connecting to: ' + config.database.uri + '. ' + err);
@@ -41,7 +47,8 @@ mongoose.connect(config.database.uri, function (err, res) {
 	}
 });
 
-// Begin listening.
+
+// Begin Listening ==============================================================
 server.listen(config.express.port, function(error) {
 	if (error) {
     console.log("Unable to listen for connections: " + error);

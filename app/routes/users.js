@@ -1,9 +1,12 @@
-var User = require('app/models/user'),
-		passport = require('passport'),
-    requireAuth = require("app/middleware/").requireAuth; // TODO: Investigate how others include middleware like this.
+// Setup ========================================================================
+var User        = require('app/models/user'),
+		passport    = require('passport'),
+    requireAuth = require("app/middleware/").requireAuth;
 
+
+// Controllers ==================================================================
 function create(req, res) {
-  User.register(new User({ nickname : req.body.nickname }), req.body.password, function(err, user) {
+  User.register(new User({ nickname: req.body.nickname }), req.body.password, function(err, user) {
     if (err) {
       return res.send(422, {
 				error: err
@@ -47,9 +50,8 @@ function update(req, res) {
 }
 
 
-function setup(app) {
-  app.post('/users', create);
-  app.put('/users/:user_id', requireAuth, update);
+// Exports ======================================================================
+module.exports = function(app) {
+  app.post('/api/users', create);
+  app.put('/api/users/:user_id', requireAuth, update);
 }
-
-module.exports = setup;

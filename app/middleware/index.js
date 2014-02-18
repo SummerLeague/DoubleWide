@@ -1,5 +1,8 @@
+// Setup ========================================================================
 var User = require('app/models/user');
 
+
+// Middelware ===================================================================
 function requireAuth(req, res, next) {
   if (req.headers.auth_token) {
   	User.findByToken(req.headers.auth_token, function(user) {
@@ -24,6 +27,8 @@ function notFound(req, res) {
   res.send(404);
 }
 
+
+// Exports ========================================================================
 module.exports = {
   notFound: notFound,
   requireAuth: requireAuth
