@@ -4,14 +4,18 @@ var User = require('app/models/user');
 
 // Middelware ===================================================================
 function requireAuth(req, res, next) {
-  if (req.headers.auth_token) {
+  if (req.isAuthenticated()) {
+    next();
+    return;
+  }
+  else if (req.headers.auth_token) {
   	User.findByToken(req.headers.auth_token, function(user) {
   		if (!user) {
   			return res.send(403, {
   				error: 'Auth Token invalid or expired.'
   			});
   		}
-  		req.current_user = user;
+  		req.user = user;
   		next();
     	return;
   	});

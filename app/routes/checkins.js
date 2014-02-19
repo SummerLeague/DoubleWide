@@ -57,7 +57,7 @@ function show(req, res) {
 
 function create(req, res) {
 	var checkin = new Checkin();
-	checkin.creator = req.current_user;
+	checkin.creator = req.user;
   checkin.loc = [req.body.lng, req.body.lat];
 
   checkin.setVenueAndSave(req.body.foursquare_id, function (err, checkin) {

@@ -1,0 +1,23 @@
+{
+  "name": "DoubleWide",
+  "version": "0.0.0",
+  "homepage": "https://github.com/SummerLeague/DoubleWide",
+  "authors": [
+    "(SummerLeague <summerleaguers@gmail.com>)",
+    "(mstultz <mstultz@gmail.com>)",
+    "(bradley <bradley.j.griffith@gmail.com>)"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "latest"
+  },
+  "devDependencies": {
+  }
+}
