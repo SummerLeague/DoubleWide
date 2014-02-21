@@ -3,15 +3,26 @@ define(['angular', 'app'], function(angular, app) {
 
 	return app.config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/', {
-      templateUrl: '/partials/main.html'
+      templateUrl: 'partials/admin.html',
+      controller: 'adminController',
+      resolve: {
+        loggedin: function(appServices) {
+          return appServices.checkLoggedin();
+        }
+      }
     });
     $routeProvider.when('/admin', {
-      templateUrl: 'partials/test/index.html',
-      controller: 'TestsController'
+      templateUrl: 'partials/admin.html',
+      controller: 'adminController',
+      resolve: {
+        loggedin: function(appServices) {
+          return appServices.checkLoggedin();
+        }
+      }
     });
     $routeProvider.when('/login', {
-      templateUrl: 'partials/test/index.html',
-      controller: 'TestTwoController'
+      templateUrl: 'partials/login.html',
+      controller: 'loginController'
     });
     $routeProvider.otherwise({
       templateUrl: '/404.html'

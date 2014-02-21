@@ -8,7 +8,8 @@ requirejs.config({
 	},
 	shim: {
 		'angular' : {'exports' : 'angular'},
-		'angularRoute': ['angular']
+		'angularRoute': ['angular'],
+		'angularResource': ['angular']
 	},
 	priority: [
 		"angular"

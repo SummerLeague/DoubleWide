@@ -4,13 +4,14 @@ define(['angular'], function (angular) {
 	/* Controllers */
 
 	return angular.module('myApp.controllers', [])
-		.controller('TestsController', ['$scope', function($scope) {
-    	$scope.test_message = 'Hello World.';
-  	}])
-		// More involved example where controller is required from an external file
-		.controller('TestTwoController', ['$scope', '$injector', function($scope, $injector) {
-			require(['controllers/test_two_controller'], function(test_two_controller) {
-				$injector.invoke(test_two_controller, this, {'$scope': $scope});
+		.controller('adminController', ['$scope', '$injector', function($scope, $injector) {
+			require(['controllers/admin_controller'], function(admin_controller) {
+				$injector.invoke(admin_controller, this, { '$scope': $scope });
+			});
+		}])
+		.controller('loginController', ['$scope', '$injector', function($scope, $injector) {
+			require(['controllers/login_controller'], function(login_controller) {
+				$injector.invoke(login_controller, this, { '$scope': $scope });
 			});
 		}]);
 });
