@@ -13,6 +13,7 @@ define(['angular'], function (angular) {
 	        // Make an AJAX call to check if the user is logged in
 	        $http.get('/api/loggedin').success(function(user){
 	          // Authenticated
+	          console.log(user);
 	          if (user !== '0') {
 	            $timeout(deferred.resolve, 0);
 	          }

@@ -1,7 +1,7 @@
 define(['angular', 'app'], function(angular, app) {
 	'use strict';
 
-  /* Controllers */
+  /* Interceptors */
 
 	return app.config(['$httpProvider', '$locationProvider', function($httpProvider, $locationProvider) {
     $httpProvider.responseInterceptors.push(function($q, $location) {

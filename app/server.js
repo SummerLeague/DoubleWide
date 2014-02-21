@@ -9,11 +9,19 @@ var express  = require('express'),
 		server   = require('http').createServer(app);
 
 
+// Passport =====================================================================
+require('../config/passport')(passport, config);
+
+
 // Configure Aapplication  ======================================================
 app.configure(function() {
 	app.use(express.logger());
 	app.use(express.bodyParser());
+	app.use(express.methodOverride());
+  app.use(express.cookieParser('wam bam thank you mam get a better secret'));
+	app.use(express.session());
 	app.use(passport.initialize());
+	app.use(passport.session());
 	app.use(express.static('public'));
 	app.use(app.router);
 });
@@ -32,10 +40,6 @@ app.configure('production', function() {
 
 // Routes =======================================================================
 require('../config/routes')(app);
-
-
-// Passport =====================================================================
-require('../config/passport')(passport, config);
 
 
 // Connect to Database ==========================================================
