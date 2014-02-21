@@ -59,7 +59,7 @@ VenueSchema.methods = extend({
 		var options = options || {};
 		options.page = (options.page > 0 ? options.page : 1) - 1;
 		options.perPage = options.perPage || 10;
-		options.criteria = { checkin: this._id };
+		options.criteria = { venue: this._id };
 
 		mongoose.model('Checkin').list(options, function(err, checkins) {
 		  if (err) {

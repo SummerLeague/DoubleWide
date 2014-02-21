@@ -30,6 +30,7 @@ function index(req, res) {
     });
   }
   else if (foursquare_id) {
+    // TODO: Should this return 200 always with just an empty set?
     Venue.findByFoursquareId(foursquare_id, function (err, venue) {
       if (!venue) {
         return res.send(422, { error: "No venue found for that foursquare id." });
