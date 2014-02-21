@@ -14,6 +14,13 @@ var VenueSchema = new Schema({
 // Class Methods ================================================================
 VenueSchema.statics = extend({
 
+	findByFoursquareId: function(foursquare_id, callback) {
+		var self = this;
+		this.findOne({ foursquare_id: foursquare_id }, function(err, venue) {
+			callback(err, venue);
+		});
+	},
+
 	findOrCreateByFoursquareId: function(foursquare_id, callback) {
 		var self = this;
 		this.findOne({ foursquare_id: foursquare_id }, function(err, venue) {

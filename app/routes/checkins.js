@@ -10,7 +10,7 @@ function index(req, res) {
   // TODO/DISCUSS: Not incredibly happy with this API design. Feel like the route should be more explicit...
   //   i.e.; scoped to a user or a venue rather than taking ids for either as URL params...
   var user_id = req.param('user_id'),
-      venue_id = req.param('venue_id');
+      foursquare_id = req.param('foursquare_id');
 
   var callback = function(err, response) {
     if (!response) {
@@ -29,10 +29,10 @@ function index(req, res) {
       user.checkins({ page: req.param('page'), perPage: req.param('per_page') }, callback);
     });
   }
-  else if (venue_id) {
-    Venue.findById(venue_id, function (err, venue) {
+  else if (foursquare_id) {
+    Venue.findByFoursquareId(foursquare_id, function (err, venue) {
       if (!venue) {
-        return res.send(422, { error: "No venue found for that venue id." });
+        return res.send(422, { error: "No venue found for that foursquare id." });
       }
       venue.checkins({ page: req.param('page'), perPage: req.param('per_page') }, callback);
     });
