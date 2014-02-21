@@ -3,7 +3,6 @@ var User          = require('app/models/user'),
 
 module.exports = function (passport, config) {
 	passport.use(User.createStrategy());
-	//passport.use(new LocalStrategy(User.authenticate())); // TODO: Investigate the authenticate method in passport-local-mongoose
 
 	passport.serializeUser(User.serializeUser());
 	passport.deserializeUser(User.deserializeUser());

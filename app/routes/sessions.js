@@ -17,14 +17,21 @@ function create(req, res) {
 				// TODO: Log.
 				return res.send(500);
 			}
-			return res.send(200, {
-				user: {
-					_id: user._id,
-					nickname: user.nickname,
-					token: user.auth_token.token,
-					token_expires_at: user.auth_token.expires_at
+			// Since we are using a custom callback, we need to call login() to create a session.
+			req.logIn(user, function(err) {
+	      if (!user) {
+					// TODO: Log.
+					return res.send(500);
 				}
-			});
+	      return res.send(200, {
+					user: {
+						_id: user._id,
+						nickname: user.nickname,
+						token: user.auth_token.token,
+						token_expires_at: user.auth_token.expires_at
+					}
+				});
+	    });
 		});
   })(req,res);
 }

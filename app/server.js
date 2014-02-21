@@ -17,9 +17,9 @@ require('../config/passport')(passport, config);
 app.configure(function() {
 	app.use(express.logger());
 	app.use(express.bodyParser());
-	app.use(express.methodOverride());
-  app.use(express.cookieParser('wam bam thank you mam get a better secret'));
-	app.use(express.session());
+  app.use(express.cookieParser());
+  app.use(express.methodOverride());
+	app.use(express.session({ secret: 'keyboard cat' }));
 	app.use(passport.initialize());
 	app.use(passport.session());
 	app.use(express.static('public'));

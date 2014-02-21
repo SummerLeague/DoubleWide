@@ -5,16 +5,16 @@
 	"author": "SummerLeague",
 	"private": true,
 	"dependencies": {
-		"config": "latest",
-		"express": "3.x",
-		"foursquarevenues": "latest",
+		"config": "*",
+		"express": "3.3.5",
+		"foursquarevenues": "*",
 		"mongodb": "1.x",
 		"mongoose": "3.x",
-		"mongoose-unique-validator": "latest",
-		"node.extend": "latest",
-		"passport": "latest",
-		"passport-local": "latest",
-		"passport-local-mongoose": "latest"
+		"mongoose-unique-validator": "*",
+		"node.extend": "*",
+		"passport": "*",
+		"passport-local": "*",
+		"passport-local-mongoose": "*"
 	},
 	"devDependencies": {
 		"mocha": "~1.13.0"
